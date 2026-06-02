@@ -8,6 +8,10 @@ compatibility_date = "2026-06-01"
 binding = "SPA_BUCKET"
 bucket_name = "cf-sharepage-spa"
 
+[[routes]]
+pattern = "sp.csu.st"
+custom_domain = true
+
 [vars]
 MAX_HTML_BYTES = "5242880"
 MAX_VERSIONS = "20"
