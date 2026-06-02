@@ -96,6 +96,16 @@ Latest URLs serve the current `publish/index.html`. Fixed-version URLs serve imm
 - Body must be non-empty and start like an HTML document near the beginning, such as `<!doctype html>` or `<html>`.
 - V1 stores one `index.html` only. Inline assets or reference externally hosted assets if the page needs CSS, JS, images, or fonts.
 
+## Pre-Publish Preview Metadata Check
+
+Before creating or updating a page, inspect the HTML `<head>` for social-media-preview-ready summary metadata:
+
+- A meaningful document title: `<title>...</title>`.
+- A concise summary description: `<meta name="description" content="...">`.
+- Prefer matching Open Graph/Twitter preview tags when the page is likely to be shared: `og:title`, `og:description`, `twitter:title`, and `twitter:description`.
+
+If the title or summary description is missing, empty, generic, or unsuitable for a link preview, recommend adding them before upload. When the agent generated or can safely edit the SPA HTML, add the preview metadata first and then publish/update. When the HTML is user-supplied and edits are not authorized, tell the user what is missing and ask whether to add it before proceeding.
+
 ## Bash curl Client Pattern
 
 Use environment variables for reusable values and secrets where possible.
