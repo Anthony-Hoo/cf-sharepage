@@ -142,6 +142,24 @@ async function updatePageViaWorker(
 }
 
 describe("worker fetch handler", () => {
+  it("redirects HTTP requests to HTTPS before route handling", async () => {
+    const env = makeEnv();
+
+    const response = await callWorker(
+      postHtml("http://example.com/app?draft=1", createHtml, env.PUBLISH_TOKEN),
+      env,
+    );
+
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe(
+      "https://example.com/app?draft=1",
+    );
+    expect(await response.text()).toBe("");
+    expect(
+      (env.SPA_BUCKET as unknown as ReturnType<typeof createFakeBucket>).keys(),
+    ).toHaveLength(0);
+  });
+
   it("serves instance-specific skill markdown for GET /SKILL.md", async () => {
     const env = makeEnv();
 

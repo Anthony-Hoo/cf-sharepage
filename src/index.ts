@@ -142,7 +142,13 @@ async function handleShare(
 
 const handler: ExportedHandler<Env> = {
   async fetch(request, env): Promise<Response> {
-    const route = parseRoute(new URL(request.url));
+    const url = new URL(request.url);
+    if (url.protocol === "http:") {
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 308);
+    }
+
+    const route = parseRoute(url);
 
     if (route.kind === "notFound") {
       return errorResponse("not found", 404);
